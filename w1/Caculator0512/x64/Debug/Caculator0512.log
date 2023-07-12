@@ -1,0 +1,6 @@
+﻿  Calculator.cpp
+  main.cpp
+D:\oop244\Caculator0512\main.cpp(11,32): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  Tester.cpp
+  Generating Code...
+  Caculator0512.vcxproj -> D:\oop244\Caculator0512\x64\Debug\Caculator0512.exe

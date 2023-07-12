@@ -1,0 +1,74 @@
+Operations
+The signature of a member function that overloads an operator consists of the keyword, the symbol and the type of the right operand, if any, within parentheses.  The left operand of any member operator is the current object.
+For example, an overloaded assignment operator for a Student right operand takes the form
+     Student& operator=(const Student&); 
+
+------------------------------------------------------------------------------------
+C++ lets us overload the following operators (amongst others): 
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+binary arithmetic (+ - * / %)
+assignment - simple and compound (= += -= *= /= %=)
+unary - pre-fix post-fix plus minus (++ -- + -)
+relational (== < > <= >= !=)
+logical (&& || !)
+insertion, extraction (<< >>)
+
+------------------------------------------------------------------------------------
+C++ DOES NOT ALLOW overloading of the following operators (amongst others):
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+the scope resolution operator (::)
+the member selection operator (.)
+the member selection through pointer to member operator (.*)
+the conditional operator (?:)
+
+C++ DOES NOT let us introduce or define new operators. 
+
+------------------------------------------------------------------------------------
+The compiler binds an expression to the member function with the signature that matches the operator symbol, the operand type and the const status. 
+1.the operator keyword
+2.the operation symbol
+3.the type of its right operand, if any
+4.the const status of the operation
+
+------------------------------------------------------------------------------------
+Promotion or Narrowing of Arguments
+
+If the compiler cannot find an exact match to an operation's signature, the compiler will attempt a rather complicated selection process to find an optimal fit, promoting or narrowing the operand value into a related type if necessary. 
+
+------------------------------------------------------------------------------------
+Return Types
+
+The return types of the pre-fix and post-fix operators differ.  The post-fix operator returns a copy of the current object as it was before any changes took effect.  The pre-fix operator returns a reference to the current object, which accesses the data after the changes have taken effect.
+
+------------------------------------------------------------------------------------
+Explicit - To prohibit the compiler from using a single-argument constructor for any implicit conversion, we declare that constructor explicit
+
+explicit Student(int); - 이렇게 선언하면
+Student harry(975), nancy;
+nancy = 428; - 이렇게 사용 불가.
+
+Student(int);
+Student harry(975), nancy;
+nancy = 428; 원래는 이렇게 하면 자동으로 Student(int)로 들어가서 숫자 처리됨.
+
+------------------------------------------------------------------------------------
+The Cost of Friendship
+
+A class definition that grants friendship to a helper function allows that function to alter the values of its private data members.  Granting friendship pierces encapsulation. 
+
+As a rule, we grant friendship judiciously only to helper functions that require both read and write access to the private data members.  Where read-only access is all that a helper function needs, using queries is probably more advisable. 
+
+Friendship is the strongest relationship that a class can grant an external entity. 
+
+------------------------------------------------------------------------------------
+The key differences between helper functions and friendship functions are as follows:
+
+Scope: Helper functions are independent and exist outside the class, while friendship functions are explicitly declared within the class as friends.
+
+Access: Helper functions only have access to the public interface of the class, whereas friendship functions have access to the private and protected members of the class.
+
+Relationship: Helper functions have a loose coupling with the class and can work with multiple classes, while friendship functions establish a specific relationship between a function and a single class.
+
+Design Purpose: Helper functions are used to extend the functionality of a class and provide additional services, while friendship functions are used to grant special access privileges to non-member functions, typically for the purpose of tight integration with the class.
+
+In summary, helper functions and friendship functions serve different purposes in C++. Helper functions provide support to a class without requiring special access, while friendship functions allow specific non-member functions to access private and protected members of a class.

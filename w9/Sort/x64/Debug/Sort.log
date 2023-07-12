@@ -1,0 +1,3 @@
+﻿  Test_Main.cpp
+D:\oop244\w9\Sort\Test_Main.cpp(6,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Sort.vcxproj -> D:\oop244\w9\Sort\x64\Debug\Sort.exe

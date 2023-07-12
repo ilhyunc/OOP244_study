@@ -1,0 +1,4 @@
+﻿  main.cpp
+D:\oop244\InClass0512\main.h(7,58): warning C4311: 'type cast': pointer truncation from 'int *' to 'unsigned int'
+D:\oop244\InClass0512\main.h(7,58): warning C4302: 'type cast': truncation from 'int *' to 'unsigned int'
+  InClass0512.vcxproj -> D:\oop244\InClass0512\x64\Debug\InClass0512.exe

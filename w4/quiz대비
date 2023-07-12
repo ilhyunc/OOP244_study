@@ -1,0 +1,129 @@
+The memory allocated for member function code is shown on the left.  The memory allocated for the instance variables is shown on the right:
+
+-----------------------------------------------------------------------
+cout.setf(ios::fixed); - 소수점자리 고정하기 위한거.
+cout.precision(2); - 소수점 2자리로 고정
+cout.unsetf(ios::fixed); - 출력 포맷 설정을 초기화합니다.
+cout.precision(6); - 출력되는 실수 값의 소수점 아래 자릿수를 6자리로 설정합니다.
+
+-----------------------------------------------------------------------
+CLASS DEFINITION -Default Behavior
+If we don't declare a constructor in the class definition, the compiler inserts a default no-argument constructor with an empty body: 
+ const int NG = 20;
+
+ class Student {
+     int no;
+     float grade[NG];
+     int ng;
+ public:
+     Student(); // ----------이렇게 정의하면
+     void set(int, const float*, int);
+     void display() const;
+ };
+
+ Student::Student() { -----------------자동으로 argument가 없는 constructor가 default로 생성됨
+ }
+
+-----------------------------------------------------------------------
+Construction
+
+The compiler assembles an object in the following order
+allocates memory for each instance variable in the order listed in the class definition
+executes the logic, if any, within the constructor's definition
+
+-----------------------------------------------------------------------
+Member Function Calls
+Since the constructor starts executing at instantiation, no normal member function is called before the constructor.  Every normal member function is called after instantiation.
+constructor는 컴파일 타임에 먼저 호출 되기 때문에, member function는 런타임에 호출.
+
+-----------------------------------------------------------------------
+DESTRUCTOR
+Complete encapsulation also requires a mechanism for tidying up at the end of an object's lifetime.  An object with dynamically allocated memory needs to deallocate that memory before going out of scope.  An object that has written data to a file needs to flush the file's buffer and close the file before going out of scope. 
+
+1.is called automatically
+2.cannot be overloaded
+3.should not be called explicitly
+
+ public:
+     Student();
+     ~Student();
+
+Default Behavior 
+ Student::~Student() {
+ }
+
+Client code cannot call any member function on an object after the object has called its destructor and gone out of scope.
+
+Object destruction proceeds in the following order
+
+execute the logic of the object's destructor
+deallocate memory for each instance variable in opposite order to that listed in the class definition
+
+영) -  the destruction of objects occurs in the reverse order of their creation. When the } of the main() function is reached, the destructors ~Student() are automatically called to destroy the objects.
+This is because objects are destroyed in the reverse order of their creation.
+한) -main function의 }가 실행될때, 자동으로 destructor "~Student();"을 호출해서
+생성의 역순으로 삭제. harry가 먼저 생성되지만 삭제는 josee부터.
+
+-----------------------------------------------------------------------
+ class Student {
+     int no;
+     float grade[NG];
+     int ng;
+ public:
+     Student();
+     ~Student();
+     void set(int, const float*, int);
+     void display() const;
+ };
+
+ int main () {
+     Student harry, josee;
+     float gh[] = {89.4f, 67.8f, 45.5f};
+     float gj[] = {83.4f, 77.8f, 55.5f};
+     harry.set(1234, gh, 3);
+     josee.set(1235, gj, 3);
+     harry.display();
+     josee.display();
+ }
+
+영) -  the destruction of objects occurs in the reverse order of their creation. When the } of the main() function is reached, the destructors ~Student() are automatically called to destroy the objects.
+This is because objects are destroyed in the reverse order of their creation.
+한) -main function의 }가 실행될때, 자동으로 destructor "~Student();"을 호출해서
+생성의 역순으로 삭제. harry가 먼저 생성되지만 삭제는 josee부터.
+
+-----------------------------------------------------------------------
+Student harry(1234, gh, 3), -- 자동으로 set function으로 감.
+        josee(1235, gj, 3); -- 자동으로 set function으로 감.
+harry.display();
+josee.display();
+harry/josee = implicit parameter,
+display(); - '(...)' ...은 Explicit parameter. 수명이 있음. 
+(implicit parameter).display(explicit parameter)
+explicit parameters are used to interact with the client code, pass information, and return values, while implicit parameters bind the member function to the current object and allow access to the instance variables.
+
+-----------------------------------------------------------------------
+THIS
+The keyword this returns the address of the current object.  That is, this holds the address of the region of memory that contains all of the data stored in the instance variables of current object.  *this refers to the current object itself; that is, to the complete set of its instance variables. 
+The keyword this has no meaning outside a member function. 
+
+
+
+
+
+///////////////////////////////////////////
+
+the correct statement would be: "The constructor is a special procedure that is automatically invoked by the programming language at the time of object creation to initialize the object."
+
+constructor don't return anything
+
+if the data mebers of a class are private, client code cannot initialize their values directly.
+
+A mutor method changes the state of an object
+
+private identifies all subsequent members listed in the class definition as inaccessible.
+
+To declare a member function to a class, we insert its prototype into the class definition.
+
+special member functions are also called manager mathod - create, assign and destroy an object
+
+The keyword class identifies a class that is private by default but the keyword struct identifies a class that is public by default
