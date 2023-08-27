@@ -1,0 +1,55 @@
+class Battery {
+    public: 
+    virtual Battery& charge(int value) = 0;
+    virtual Battery& dischargeI(int value) = 0;
+    virtual ostream& guage(ostream& os) const= 0;
+    ~Battery() {};
+}
+
+class LilonBattery : public Battery{
+    int m_value
+    public:
+    LilonBattery(int value){
+        m_value = value;
+    }
+    Battery& charge(int value) {
+        m_value += value;
+
+        if (m_value > 100)
+        {
+            m_value = 100;
+        }
+
+        return *this;
+    }
+
+    Battery& discharge(int value){
+        m_value -= value;
+        if (m_value < 0)
+        {
+            m_value = 0;
+        }
+
+        return *this;   
+    }
+
+    ostream& guage(ostream& os) const{
+        os << "LilonBattery has" << m_value << "% charge";
+    }
+}
+
+class MyPowerBank : public LilonBattery {
+    char* m_name;
+public:
+    MyPowerBank(const char* name, int value) : LilonBattery(value) 
+    {
+        m_name = new char[strlen(value) + 1];
+        strcpy(m_name, name);
+    }
+
+    ostream& guage(ostream& os) const {
+        os << m_name << "'s powerbank";
+        LilonBattery:: guage(os);
+        return os
+    }
+}

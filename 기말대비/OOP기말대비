@@ -1,0 +1,145 @@
+
+
+char* m_label = nullptr;// 이렇게 해두면 생성할때마다 초기화 안해줘도 됨
+문자열 char*은 strlen을 사용하여 숫자를 뽑아낼수있지만, 다른경우에는 m_noOfLine과 같은 크기를 정할 사이즈가 필요함.
+
+virtual
+부모클래스의 함수앞에 키워드로 표시
+자신이 불린다고 하더라도, 실제로 인스턴스가 자기 자식의 타입이라면, 자식클래스의
+오버라이딩된 함수를 대신 부르게 하는 역할
+
+pure virtual (순수 가상함수)
+바디가 없는 함수(구현 되지 않은 함수)
+자식이 구현해주길 바라면서(반드시 해야한다) 부모클래스에 정의하는 함수.
+pure virtual 함수가 정의된 클래스는 abstract 클래스라고 부름.
+abstract클래스는 인스턴스가 만들어질 수 없음. 오로지 가상의 부모역할을 하기위해서 존재
+이러한 추상 부모클래스를 상속하는 자식클래스에서는, pure virtual 함수를 '반드시'모두 다
+구현해야만 concrete 클래스가 될 수 있다.
+
+부모클래스의 포인터가 자식클래스를 가리키는 상황에서,
+부모클래스 포인터에 delete를 가하면, 자식까지 같이 지워줘야 하므로,
+virtual 키워드를 붙여준다. 
+
+mutator과 query는 반대개념
+
+// 클래스 기본(생성자, 소멸자, 멤버변수, 멤버함수, const(잘나옴))
+// 동적할당 (메모리 leak), rule of 3, dangling pointer
+// 오퍼레이터(const로 장난치는거)
+// 상속 (virtual, 부모클래스와 자식클래스 overriding 할때, 형태 일치)
+
+
+//런타임 에러: 동적할당에 관련된 모든것, 
+//컴파일 에러: const, overriding(형태 일치), overloading, type mismatch(자식 클래스의 포인터로 부모클래스의 인스턴스를 가리키는것), abstract 클래스를 생성하려고 시도하는것, 접근제어자(private, public) 위반.
+//inhancement, virtual 부분
+
+
+--------------------------------------------------------------------------------
+abstract class : 함수중에, pure virtual function이 하나라도 포함된 클래스
+인터페이스: 가지고 있는 모든 함수가 pure virtual function이어야 함, 멤버변수도 없어야함
+abstract class -> 인터페이스다 x
+인터페이스는 abstract class -> o
+
+abstract클래스는 인스턴스가 만들어질 수 없음. 오로지 가상의 부모역할을 하기위해서 존재
+이러한 추상 부모클래스를 상속하는 자식클래스에서는, pure virtual 함수를 '반드시'모두 다
+구현해야만 concrete 클래스가 될 수 있다.
+
+
+/////////////////////////////////////////////////////////////////////
+What is polymorphism
+Polymorphism refers to the multiplicity of meanings attached to a single identifier. OOL support selection of behavior across related types through polymorphism. The term "polymorphic" stands for 'of many forms'. A polymorphic language selects an operation on an object based on the type associated with the object.
+
+How do object-oriented languages implement inclusion polymorphism?
+A. Object-oriented languages implement inclusion polymorphism through member functions in a hierarchy.
+
+What is the difference between a static type and a dynamic type of a polymorphic object?
+A. The static type of a polymorphic object refers to the type of the object's hierarchy, while its dynamic type refers to the object's actual type.
+
+How does the compiler bind a function call to a function definition?
+A. The compiler binds a function call to a function definition using an object's type, and the binding can be either early binding (based on the object's static type) or dynamic dispatch (based on the object's dynamic type).
+
+What is the purpose of the virtual keyword in C++?
+A. The virtual keyword in C++ instructs the compiler to postpone binding a member function call until run-time, allowing the most derived version of the function to be called based on the object's dynamic type.
+
+What is the main characteristic of a pure virtual function?
+A. A pure virtual function is a signature without a definition, and it requires derived classes to provide the implementation.
+
+Why are abstract classes unable to be instantiated?
+A. Abstract classes contain or inherit a pure virtual function for which no implementation is provided in the base class, hence they cannot be instantiated.
+
+What is the importance of an array of pointers in object-oriented design?
+A. An array of pointers provides a systematic technique to access objects of different dynamic types within the same hierarchy, allowing for polymorphic behavior.
+
+Why do inheritance hierarchies that access resources at multiple levels require intervention?
+A. Inheritance hierarchies that access resources at multiple levels require intervention to manage relationships between special member functions. It ensures appropriate calls are made between these functions, especially when dealing with resources like memory.
+
+In the context of inheritance hierarchies, what is the default behavior of derived class constructors in relation to their base class constructors?
+A. By default, each constructor of a derived class calls a constructor of its base class. If not specified, this is the no-argument constructor of the base class.
+
+What is the significance of the no-argument constructor in inheritance hierarchies?
+A. The no-argument constructor is the default constructor called by derived classes in the absence of an explicit call to a different base class constructor.
+
+How does the copy constructor of a derived class interact with its base class counterpart?
+A. The copy constructor of a derived class calls a constructor of its base class. By default, it's the no-argument constructor, but this can be overridden with an explicit call to a different base class constructor.
+
+What is the importance of an explicit call to the base class copy assignment operator in a derived class?
+A. An explicit call to the base class copy assignment operator ensures that the base class portion of an object is appropriately assigned in the case of custom copy assignment operators in derived classes. This is especially important when dealing with resources
+
+What is parametric or generic polymorphism and how does it benefit the separation of interfaces from implementations?
+A. Parametric or generic polymorphism allows the type and the logic executed on that type to be independent of one another. This means that different clients can access the same logic using different totally unrelated types, allowing for a perfect separation of interfaces from implementations.
+
+How does C++ implement parametric polymorphism?
+A. C++ implements parametric polymorphism using template syntax. This means that the compiler generates the implementation for each client type at compile-time based on the template defined by the developer.
+
+////////////////////////
+
+What is the difference between using typename and class in a template definition?
+A. In template definitions, both typename and class can be used to identify a type (either fundamental or compound). They are functionally equivalent in this context.
+
+What is the difference between using typename and class in a template definition?
+A. In template definitions, both typename and class can be used to identify a type (either fundamental or compound). They are functionally equivalent in this context.
+
+Differentiate between ‘static_cast’, ‘reinterpret_cast’, ‘const_cast’, and ‘dynamic_cast’ in C++.
+A. static_cast: Used for conversions between related types and provides limited type checking.
+reinterpret_cast: Converts values from one type to an unrelated type, producing a value that may have the same bit pattern.
+const_cast: Used to remove the const status from a value.
+dynamic_cast: Converts values within the same class hierarchy and offers type checking.
+
+How do untyped languages differ from typed languages in terms of memory?
+A. Untyped languages support words of one fixed size, while typed languages support regions of memory of different sizes distinguished by their type.
+
+What is the main difference between monomorphic and polymorphic languages regarding an object's type?
+A. In a monomorphic language, the type of an object, once declared, cannot change throughout the object's lifetime. Polymorphic languages, on the other hand, allow the type of a polymorphic object to change during its lifetime.
+
+What is the role of a type system in a programming language?
+A. A type system introduces consistency into a programming language. It serves as the first line of defense against coding relationships between unrelated entities and enables the compiler to check whether coded relations follow well-defined sets of rules.
+
+Describe the difference between ad-hoc and parametric polymorphism as defined by Christopher Strachey.
+A. Ad-hoc polymorphism is when a function works, or appears to work, on several different types and may behave in unrelated ways for each type. Parametric polymorphism is when a function works uniformly on a range of types, and these types usually exhibit some common structure.
+
+What is the main difference between coercion and overloading as types of ad-hoc polymorphism?
+A. Coercion addresses differences between argument types in a function call and the parameter types in the function's definition, allowing type conversion. Overloading, on the other hand, allows function calls with the same identifier but different argument types to be bound to function definitions with correspondingly different parameter types.
+
+How does universal polymorphism differ from ad-hoc polymorphism?
+A. Unlike ad-hoc polymorphism, which may only appear polymorphic upon initial observation, universal polymorphism is true polymorphism. Its polymorphic character remains evident even after close scrutiny. Moreover, universal polymorphism imposes no restriction on the admissible types, allowing the same logic to apply to a potentially unlimited range of types
+
+Explain inclusion polymorphism and how it relates to object-oriented languages.
+A. Inclusion polymorphism allows for multiple member function definitions with the same name throughout an inheritance hierarchy and selects the appropriate definition based on the object's type. This type belongs to an inheritance hierarchy, and the term "inclusion" refers to the base type including the derived types within this hierarchy. Inclusion polymorphism is specific to object-oriented languages.
+
+What is parametric polymorphism, and how is it implemented in C++?
+A. Parametric (or generic) polymorphism allows function definitions to share identical logic independently of type. It ensures that the same function logic can be applied across any type, provided certain conditions, like the presence of relevant operators, are met. In C++, parametric polymorphism is implemented at compile-time using template syntax.
+
+Which programming language was C++ originally designed as a synthesis of?
+A. C++ was originally designed as a synthesis of C and object-orientation Simula-style.
+
+How does inlining improve function execution time?
+A. Inlining improves a function's execution time by replacing the function call with the function logic, thereby eliminating the overhead associated with parameter passing.
+
+
+How does C++ handle dynamic memory allocation errors in versions prior to C++98 compared to versions post C++98?
+A. Prior to C++98, the new operator would return the null address if it encountered an error, like insufficient memory. Since C++98, by default, the new operator throws an exception if it encounters an error.
+
+What is a virtual table in the context of C++ and why is it used?
+A. A virtual table is a mechanism used by most C++ compilers to implement dynamic dispatch. It contains pointers that redirect to member function implementations corresponding to an object's dynamic type. The virtual table helps in selecting the correct implementation of a member function at runtime for a given object.
+
+What is the purpose of using the keyword "delete" in the context of C++11?
+A. In C++11, the keyword "delete" is used to inform the compiler that a default definition of a member function should not be created.

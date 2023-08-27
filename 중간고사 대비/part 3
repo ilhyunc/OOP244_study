@@ -1,0 +1,48 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <cstring>
+using
+namespace std;//
+
+class Time {
+	int m_hour;
+	int m_min;
+	int m_sec;
+public:
+	Time(int hour, int min, int sec) {
+		m_hour = hour;
+		m_min = min;
+		m_sec = sec;
+	}
+	Time timeBefore(int min) const{//T1은 안변함
+		int tempMin = m_min;
+		int tempHour = m_hour;
+		tempMin -= min;
+		if (tempMin < 0)
+		{
+			tempHour--;
+			tempMin += 60;
+		}
+		if (tempHour < 0)
+		{
+			tempHour += 24;
+		}
+
+		return Time(tempHour, tempMin, m_sec);
+	}
+
+	ostream& display(ostream& os =cout) const {
+		cout << m_hour << ":" << m_min << ":" << m_sec << endl;
+		return os;
+	}
+};
+
+void main() {
+	Time t1(10, 0, 0), t2(0, 50, 0);
+
+	cout << "\n New value of t1 : ";
+	t1.timeBefore(10).display();
+
+	cout << "\n New value of t2 : ";
+	t2.timeBefore(60).display();
+}

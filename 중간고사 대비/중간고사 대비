@@ -1,0 +1,109 @@
+Mark& operator++(){전위 증가 연산자.
+  m_grade++
+  return *this;
+} = ++() 
+
+Mark operator++(int) {후위 증가 연산자.
+  Mark temp(*this)
+  m_grade++
+  return temp;
+} = ()++
+
+-------------------------------------------------------------------------------
+ostream 은 &무조건 사용. (ostream& ostr) 안하면 cout에서 오류됨.
+ostrea& operator<<(ostream& ostr, const Library& L)
+캐스팅 operator는 무조건 const
+memory leak!!! 
+
+int num { }// 디폴트로 초기화/ .q
+Player* m_players{ }; / 보다 안전하게 사용하기 위해.
+포인터는 초기값이 다 nullptr
+
+캐스팅 operator int() bool() 있으면
+컴파일러가 bool로 먼저가려고 하기때문에 명확히 해주는게 좋음
+
+-------------------------------------------------------------------------------
+attribude = 멤버 variable
+BETWEEN =  양끝포함 x
+
+생성자에는 const XXX, const 없는거 = modifier
+Double(double value = 0); - 만들면서 부터 생성되는것.
+Double& operator=(double value); - 만들어진 애들 assignment(대입)하는것
+
+operator double()const{ casting operator
+    return m_value;
+}
+
+//ostream& operator<<(ostream& os, const Double& a) const - 불가
+ostream& operator<<(ostream& os, const Double& a){ -  Helper function=
+    os << (double)a;
+    return os;
+}
+
+cin >> D[2];
+
+istream& operatoer>>(istream& is, Double& a){
+    double temp;
+
+    cout << "Enter a Double: ";
+    is >> temp;
+
+    bool ok= true;
+    do
+    {  
+        if (is.fail()) {
+            is.clear(); -fail시에는 clear 무조건 필요.
+            is.ignore(1000, '\n'); 두줄 세트
+            cout << "Bad Double, re-enter: ";
+            ok = false
+        }
+        else if(temp < 0 || temp > 100){
+            is.ignore(1000, '\n');
+            cout << "Invalid value, re-enter: ";
+            ok = false;
+        }
+    } while (!ok);
+    a = temp;
+
+    return is;
+}
+
+hold a dinamic array 
+
+calss DoubleArray {
+    int m_noOfArray;
+    Double* m_date;
+public:
+    DoubleArray(int size = 1) {
+        if (size <1)
+        {
+            size = 1;
+        }
+        m_noOfArray = size;
+        m_date = new Double[m_noOfArray];        
+    }
+
+}
+
+------------------------------------------
+query = const가 붙은거, modifier = const 안붙은거.
+Double& operator[](int index);
+
+index operator = operator[];
+
+DoubleArray = da;
+da[3]; = da.operator[](3);
+자동으로 operator[]; 호출
+
+
+만약
+DoubleArray = da[3];
+da[7];
+
+Double& operator[](int index){
+    if(index > m_noOfArray -1) {
+        delete[] m_data;
+        m_data = new Double[index + 1];
+    } 
+
+}

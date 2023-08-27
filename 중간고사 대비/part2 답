@@ -1,0 +1,80 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <cstring>
+using namespace std;//
+class Person {
+    char m_name[31]{};
+public:
+    Person(const char* name = nullptr) {//
+        if (name)
+            strcpy(m_name, name);
+    }
+    ostream& display(ostream& ostr) const{//
+        return ostr << m_name;
+    }
+};
+ostream& operator<<(ostream& ostr, const Person& P) {//
+    return P.display(ostr);
+}
+class Lineup {
+    Person* m_lineup{};//nullptr
+    int m_size{};//
+public:
+    Lineup& operator<<(const Person& P) {
+        Person* temp = new Person[m_size + 1];
+        temp[m_size] = P;
+        for (int i = 0; i < m_size; i++)
+            temp[i] = m_lineup[i];
+        delete[] m_lineup;//
+        m_lineup = temp;
+        m_size++;
+        return *this;
+    }
+    Person& operator[](int index) const{//
+        return m_lineup[index % m_size];
+    }
+    ~Lineup() {
+        delete[] m_lineup;//
+    }
+    bool operator!()const {
+        return m_size == 0;
+    }
+    operator int()const {
+        return m_size;
+    }
+};
+ostream& operator<<(ostream& ostr, const Lineup& L) {
+    for (int i = 0; i < L; i++) {
+        ostr << i + 1 << ":" << L[i] << " ";
+    }
+    return ostr;
+}
+void showLineup(const Lineup& L, const char* title) {
+    cout << title;
+    if (!L)
+        cout << " is empty!";
+    else
+        cout << endl << L;
+    cout << endl << "--------------" << endl;
+}
+int main() {
+    Person P;
+    cout << "Empty: " << P << endl;
+    P = "Tester";
+    cout << "Not Empty: " << P << endl;
+    Lineup L;
+    showLineup(L, "Bus Lineup");
+    L << "Jack" << "Jill" << "joe";
+    showLineup(L, "Coffee lineup");
+    return 0;
+}
+/*
+* Intended ouput:
+Empty:
+Not Empty: Tester
+Bus Lineup is empty!
+--------------
+Coffee lineup
+01:Jack 02:Jill 03:joe
+--------------
+*/

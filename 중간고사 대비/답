@@ -1,0 +1,155 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <cstring>
+    using namespace std;
+const float max_value = 100.0;
+class Float {
+    // the attribute: 
+    float m_value;
+public:
+    // the one agument constructor: 
+    Float(float value = 0.0) {
+        if (value >= 0 && value < max_value)
+        {
+            m_value = value;
+        }
+        else
+        {
+            m_value = -1;
+        }
+    }
+    // the assignment operator
+    Float& operator=(float value) {
+        if (value >= 0 && value < max_value)//-------------------------------------------------
+        {
+            m_value = value;
+        }
+        else
+        {
+            m_value = -1;
+        }
+        return *this;
+    }
+    // the int cast overload (type converstion overload)
+    operator float() const {
+        return m_value;
+    }
+};
+// operator<< overaload (cout << ...)
+ostream& operator<<(ostream& os,const Float& a) {
+    os << (float)a;
+    return os;
+}
+
+istream& operator>>(istream& is, Float& a) {
+    
+    float temp;
+    bool ok = false;
+    do
+    {
+        ok = true;
+        is >> temp;
+        if (is.fail())
+        {
+            is.clear();
+            is.ignore(1000, '\n');
+            cout << "Bad Float, re-enter: ";
+            ok = false;
+        }
+        else if (temp <= 0 || temp >= max_value)
+        {
+            is.ignore(1000, '\n'); 
+            cout << "Invalid Value, re-enter: ";
+            ok = false;
+        }
+    } while (!ok);
+    a = temp;//-----------------
+    return is;
+}
+
+class FloatArray {
+    // the attributes
+    Float* m_data;
+    int m_size;
+public:
+    // one argument constructor
+    FloatArray(int size = 1) {
+        if (size < 1)
+        {
+            m_size = 1;
+        }
+        else
+        {
+            m_size = size;
+            m_data = new Float[m_size];
+        }
+    }
+    // modifier index operator
+    Float& operator[](int index) {
+        if (index >= m_size)
+        {
+            Float* temp = m_data;
+            m_data = new Float[index + 1];
+            for (int i = 0; i < m_size; i++)
+            {
+                m_data[i] = temp[i];
+            }
+            delete[] temp;
+            m_size = index + 1;
+        }
+        return m_data[index];
+    }
+    // qurey index operator
+    const Float& operator[](int index) const {
+        return m_data[index % m_size];
+    }
+    // integer cast overlaod
+    operator int() const {
+        return m_size;
+    }
+    // memory cleanup
+    ~FloatArray() {
+        delete[] m_data;
+    }
+};
+void prnFloatArray(const FloatArray & F) {
+    int i = 0;
+    // looping 3 times (size of F) 
+    cout << "F has " << int(F) << " elements: ";
+    while (i < F) {  // F will be casted to an integer by compiler
+        cout << "F[" << i << "]= " << F[i++] << ", ";
+    }
+    // goin out of bound but since F is const the operator[] should loop back instead of resizing
+    cout << "F[" << i << "]: " << F[i++] << endl;
+}
+int main() {
+    Float A = 300.1f, B = 55.2f;
+    cout << "Invalid A has the value " << A << endl;
+    cout << "Valid B has the value " << B << endl;
+    FloatArray D(2);
+    prnFloatArray(D);
+    D[0] = 10.0;
+    D[1] = 20.0;
+    D[2] = 300.0;  // going out of bound to resize and also set to invalid
+    prnFloatArray(D);
+    cout << "Enter a Float: ";
+    cin >> D[2];
+    prnFloatArray(D);
+    return 0;
+}
+
+
+/*
+* Execution Sample
+*
+Invalid A has the value -1
+Valid B has the value 55.2
+F has 2 elements: F[0]= 0, F[1]= 0, F[2]: 0
+F has 3 elements: F[0]= 10, F[1]= 20, F[2]= -1, F[3]: 10
+Enter a Float: abc
+Bad Float, re-enter: -10.0
+Invalid Value, re-enter: 300.0
+Invalid Value, re-enter: 12.34
+F has 3 elements: F[0]= 10, F[1]= 20, F[2]= 12.34, F[3]: 10
+
+*/
